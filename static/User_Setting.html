@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="./css/userData.css" />
+        <link rel="stylesheet" href="./css/nav.css">
+        <link rel="stylesheet" href="./css/nav_top.css">
+        <link rel="stylesheet" href="./css/textcolor.css">
+
+        <title>User_Setting</title>
+        
+    </head>
+    
+    <body id="body-pd" >
+        
+        <div class="l-navbar" id="navbar">
+            <nav class="nav">
+                <div>
+                    <div class="nav__brand">
+                        <ion-icon name="menu" class="nav__toggle" id="nav-toggle"></ion-icon>
+                        <a href="index.html" class="nav__logo">EIE4432</a>
+                    </div>
+                    <div class="nav__list">
+                        
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/UserProfile.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">User Profile</span>
+                        </a>
+
+                        
+                        <a href="./User_BookingPage.html" class="nav__link collapse">
+                            <img src="./img/Bookings.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name"> Bookings</span>
+                        </a>
+
+
+                        <br/><br/>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Message.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Message</span>
+                        </a>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Help.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Help</span>
+                        </a>
+
+                        <a href="./User_Setting.html" class="nav__link active">
+                            <img src="./img/Setting_a.png" name="home" class="nav__icon" style="width:18px;height:18px;" />
+                            <span class="nav__name">Setting</span>
+                        </a>
+
+
+
+
+                    </div>
+                </div>
+
+                <a href="./index.html" class="nav__link">
+                    <ion-icon name="log-out" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- userData.css -->
+        
+
+        
+        <div class="header">
+            <div >
+                <b class="bigText">Hello, User</b><br/>
+                <span style="color:#9a968c">Have a nice day</span><br/><br/>
+    
+                <b class="bigText" style="color:#5e79f0">John Wick</b>
+            </div>
+            <div class="user-profile">
+                <img src="./img/user.png" id ="output_image0" style="color:#9a968c;width:35px;height:35px;">
+                <div class="user-name" >John Wick</div>
+                
+            </div>
+        </div>
+        <div id="flex-container">
+
+             
+            
+
+            <div id="main">
+                <div  id="message_box_top">
+                    <span style="color:#2c2c2b">Personal Information</span>
+                </div>
+                
+                <!-- Basic Information -->
+                <div  id="info_box">
+                    <div id="settingData_box">
+                        <span  id="info_box">
+                            <span>Basic Information</span>
+                            <input class="center" id ="btn_1" type="submit" value="Update Account Info" onclick="updateAccount()"/>
+                            <input class="center" id ="btn_2" type="reset" value="Not Update" onclick="reset()"/>
+                            <br/>
+                        </span> <br/>
+                        
+                        <span  id="info_box" >
+                            <span>Personal photo</span>
+                            <img src="./img/user.png" id ="output_image1" class="header2" class="user-profile" style="color:#9a968c;width:35px;height:35px;" >
+                            <input  id="hidden_info_0" type="file" value="png" accept="image/*" onchange="preview_image(event)">
+                            
+
+                        </span> <hr width="100%" size="2">
+                        
+                        <span  id="info_box" >
+                            <span>Name:</span>
+                            <span id ="info_1">John Wick</span>
+                            <input id="hidden_info_1" class="UserInput_txt" type="text" placeholder="e.g: Chen Xiao Ming" size="40"/></span></h4>
+
+                        </span> <hr width="100%" size="2">
+                        
+                        <span  id="info_box" >
+                            <span >Gender:</span>
+                            <span id ="info_2">Male</span>
+                            <span id="hidden_info_2">
+                                <input id="gender_type" type="radio" name="gender_type" value="Male" checked>M 
+                                <input id="gender_type" type="radio" name="gender_type" value="Female" >F
+                            </span>
+                            
+                        </span> <hr width="100%" size="2">
+
+                    </div>  
+                </div>
+
+
+                <!-- Contact Information -->
+                <div  id="info_box">
+                    <div id="settingData_box">
+                        <span  id="info_box">
+                            <span>Contact Information</span>
+                            <input class="center" id ="btn_3" type="submit" value="Update Account Info" onclick="updateAccount2()"/>
+                            <input class="center" id ="btn_4" type="reset" value="Not Update" onclick="reset2()"/>
+                            <br/>
+                        </span> <br/>
+                        
+                        
+                        <span  id="info_box" >
+                            <span>Email:</span>
+                            <span id ="info_3">JohnWick123@gmail.com</span>
+                            <input id="hidden_info_3" class="UserInput_txt" type="email" placeholder="e.g: ABC123@xxx.com (Email Address)" size="40"/></span></h4>
+
+                        </span> <hr width="100%" size="2">
+                        
+                        <span  id="info_box" >
+                            <span >Phone:</span>
+                            <span id ="info_4">21800000</span>
+                            <input id="hidden_info_4" class="UserInput_txt" name="phone" minlength="8" maxlength="8" placeholder="e.g: 277xxx11 (Mobile Phone Number)" size="40"/></span></h4>
+                
+                            
+                        </span> <hr width="100%" size="2">
+
+                    </div>  
+                </div>
+
+            </div>
+        </div>
+        
+       
+        
+        
+        <!-- ===== IONICONS ===== -->
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        
+        <!-- ===== MAIN JS ===== -->
+        <script src="./js/main.js"></script>
+        <script src="./js/setting.js"></script>
+        <script type="text/javascript" src="./jslib/jquery-1.11.1.js"></script>
+    </body>
+</html>
+
+
+<!-- JQ -->
+<script>
+    $("#btn_1").css("background-color","MediumSeaGreen");
+    $("#btn_3").css("background-color","MediumSeaGreen");
+
+    $(document).ready(function(){
+        $("#btn_1").click(function(){
+            $("#btn_1").css("background-color","MediumSeaGreen");
+            $("#btn_2").css("background-color","Tomato");
+            $(".UserInput_txt").css("background-color","white");
+        });
+
+        $("#btn_3").click(function(){
+            $("#btn_3").css("background-color","MediumSeaGreen");
+            $("#btn_4").css("background-color","Tomato");
+            $(".UserInput_txt").css("background-color","white");
+        });
+
+        $(".UserInput_txt").focus(function(){
+            $(this).css("background-color","Tomato");
+        });
+
+        $(".UserInput_txt").keydown(function(){
+            $(this).css("background-color","MediumSeaGreen");
+        });
+
+        $(".UserInput_txt").blur(function(){
+            if(this.value != ""){
+                $(this).css("background-color","#a6d7ff");
+            }else{
+                $(this).css("background-color","white");
+            } 
+        });
+    });
+
+
+
+ </script>
