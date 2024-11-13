@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="./css/userData.css" />
+        <link rel="stylesheet" href="./css/nav.css">
+        <link rel="stylesheet" href="./css/nav_top.css">
+        <link rel="stylesheet" href="./css/textcolor.css">
+
+        <title>User_BookingPage</title>
+        
+    </head>
+    
+    <body id="body-pd" >
+        
+        <div class="l-navbar" id="navbar">
+            <nav class="nav">
+                <div>
+                    <div class="nav__brand">
+                        <ion-icon name="menu" class="nav__toggle" id="nav-toggle"></ion-icon>
+                        <a href="index.html" class="nav__logo">EIE4432</a>
+                    </div>
+                    <div class="nav__list">
+                        
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/UserProfile.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">User Profile</span>
+                        </a>
+
+                        
+                        <a href="./User_BookingPage.html" class="nav__link active">
+                            <img src="./img/Bookings_a.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name"> Bookings</span>
+                        </a>
+
+
+                        <br/><br/>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Message.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Message</span>
+                        </a>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Help.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Help</span>
+                        </a>
+
+                        <a href="./User_Setting.html" class="nav__link collapse">
+                            <img src="./img/Setting.png" name="home" class="nav__icon" style="width:18px;height:18px;" />
+                            <span class="nav__name">Setting</span>
+                        </a>
+
+
+
+
+                    </div>
+                </div>
+
+                <a href="./index.html" class="nav__link">
+                    <ion-icon name="log-out" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- userData.css -->
+        
+
+        
+        <div class="header">
+            <div >
+                <b class="bigText">Hello, User</b><br/>
+                <span style="color:#9a968c">Have a nice day</span><br/><br/>
+    
+                <b class="bigText" style="color:#5e79f0">John Wick</b>
+            </div>
+            <div class="user-profile">
+                <img src="./img/user.png"  style="color:#9a968c;width:35px;height:35px;" alt="User Profile" class="profile-pic">
+                <div class="user-name">John Wick</div>
+            </div>
+        </div>
+        <div id="flex-container">
+
+             
+
+            <div id="main">
+                <div  id="message_box_top">
+                    
+                    <span>Booking List</span>
+                    <br/>
+                    <span class="smallText" style="color:#9a968c"><small>Lorem ipsum lorem uojuhn</small></span>
+                    
+                </div>
+                <div  id="bookingRecord">
+                    <!-- must be 3 info_box based userData.css, #bookingRecord of column-count:3;-->
+                    <div  id="info_box">
+                        <div id="bookData_box">
+                            <img src="./img/privateCar.png" id="output_image" style="width:200px;height:270px;" /><br/>
+                            <p class="darkblue">From: 01 NOV 06:00</p>
+                            <p class="darkblue">To: 01 NOV 10:30</p>
+                            <p class="darkblue">Hong Kong Disneyland Hotel Car park</p>
+                            <br/>
+                            <p class="darkblue">Total Payment $75</p>
+                        </div>
+                    </div>
+
+
+                    <div  id="info_box">
+                        <div id="bookData_box">
+                            <img src="./img/privateCar.png" id="output_image" style="width:200px;height:270px;" /><br/>
+                            <p class="darkblue">From: 02 NOV 06:00</p>
+                            <p class="darkblue">To: 02 NOV 10:30</p>
+                            <p class="darkblue">Hong Kong Disneyland Hotel Car park</p>
+                            <br/>
+                            <p class="darkblue">Total Payment $75</p>
+                        </div>
+                    </div>
+                    
+
+                    <div  id="info_box">
+                        <div id="bookData_box">
+                            <img src="./img/privateCar.png" id="output_image" style="width:200px;height:270px;" /><br/>
+                            <p class="darkblue">From: 03 NOV 06:00</p>
+                            <p class="darkblue">To: 03 NOV 10:30</p>
+                            <p class="darkblue">Hong Kong Disneyland Hotel Car park</p>
+                            <br/>
+                            <p class="darkblue">Total Payment $75</p>
+                        </div>
+                    </div>
+                </div>
+                <div  id="message_box_top" class="header2">
+                
+                    <span >
+                        <input class="center2"  id ="btn_1" type="submit" value="<<"/>
+                    </span>
+                    <br/>
+                    <span>
+                        <input class="center2" id ="btn_1" type="submit" value=">>"/>
+                    </span>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+       
+        
+        
+        <!-- ===== IONICONS ===== -->
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        
+        <!-- ===== MAIN JS ===== -->
+        <script src="./js/main.js"></script>
+        <script type="text/javascript" src="./jslib/jquery-1.11.1.js"></script>
+    </body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            b.bigText {
+              font-size: 25px;
+            }
+            b.bigText {
+                font-size: 25px;
+            }
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="./css/booking.css" />
+        <link rel="stylesheet" href="./css/nav.css">
+        
+        <title>BookingPage</title>
+        
+    </head>
+    
+    <body id="body-pd" >
+        
+        <div class="l-navbar" id="navbar">
+            <nav class="nav">
+                <div>
+                    <div class="nav__brand">
+                        <ion-icon name="menu" class="nav__toggle" id="nav-toggle"></ion-icon>
+                        <a href="index.html" class="nav__logo">EIE4432</a>
+                    </div>
+                    <div class="nav__list">
+                        
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/UserProfile.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">User Profile</span>
+                        </a>
+
+                        
+                        <a href="#" class="nav__link active">
+                            <img src="./img/Bookings_a.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name"> Bookings</span>
+                        </a>
+
+
+                        <br/><br/>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Message.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Message</span>
+                        </a>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Help.png" name="home" class="nav__icon" style="width:18px;height:18px;"/>
+                            <span class="nav__name">Help</span>
+                        </a>
+
+                        <a href="#" class="nav__link collapse">
+                            <img src="./img/Setting.png" name="home" class="nav__icon" style="width:18px;height:18px;" />
+                            <span class="nav__name">Setting</span>
+                        </a>
+
+
+
+
+                    </div>
+                </div>
+
+                <a href="./login.html" class="nav__link">
+                    <ion-icon name="log-out" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Log Out</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- booking.css -->
+        <div >
+            <b class="bigText">Hello, User</b><br/>
+            <span style="color:#9a968c">Have a nice day</span><br/><br/>
+
+            <b class="bigText" style="color:#5e79f0">John Wick</b>
+        </div>
+        
+        <div id="flex-container">
+
+            <span id="message_box">
+            <marquee> 25/11/2021, The All lessons will be online at home!!!</marquee>
+            </span>
+
+            <div id="userImg">
+	            <big><big><u><i><b>Yeung Hang</big></big></u></i></b>
+                <img src="../wtm.png" id="output_image" style="border:solid;width:270px;height:270px;" />
+                <input type="file" value="png" accept="image/*" onchange="preview_image(event)">
+            </div>
+
+            
+            <div id="main">
+            
+	            <u><h4>Student ID: 200068765</h4></u>
+
+                <h4>Student Name: <span id ="info_0">Yeung Hang</span>
+                <input id="hidden_info_0" class="UserInput_txt" type="text" placeholder="e.g: Chen Xiao Ming (Full Name In Your HKID)" size="40"/></span></h4>
+
+                <h4>Phone Number: <span id ="info_1">56635210</span>
+                <input id="hidden_info_1" class="UserInput_txt" name="phone" minlength="8" maxlength="8" placeholder="e.g: 277xxx11 (Mobile Phone Number)" size="40"/></span></h4>
+                
+                <h4>Email: <span id ="info_2">200068765@stu.vtc.edu.hk</span>
+                <input id="hidden_info_2" class="UserInput_txt" type="email" placeholder="e.g: ABC123@xxx.com (Email Address)" size="40"/></span></h4>
+
+                
+
+                <h4>Password: <span id ="info_3">********</span><span id ="CountSec"></span>
+                <input id="hidden_info_3" class="UserInput_txt" type="password" placeholder="e.g: A12**** (Account Password)" size="40"/></span></h4>
+                
+                <h4>Address: <span id ="info_4">25/F 2510 YeungYeung building YH Street  KOWLOON</span></br>
+                <textarea id="hidden_info_4" class="textA" cols="60" rows="5" placeholder="e.g: 25/F 2510 YeungYeung building YH Street  KOWLOON"></textarea> </h4>
+
+
+                <h6><input class="center" id ="btn_1" type="submit" value="Update Account Info" onclick="updateAccount()"/>
+                <input class="center" id ="btn_2" type="reset" value="Not Update" onclick="reset()"/></h6>
+               
+            </div>
+            
+
+            <div id="footer"  >
+		        <h2>*2A Class Information*</h2>
+
+		        <span class="redtext" >
+		        </span><span id="1" class="hoverToWhite"  onclick="redText(1)">
+                     1. Follow school rules!!! <br/><br/>
+		        </span><span id="2" class="hoverToWhite"  onclick="redText(2)">
+		             2. Don't sleep in the lessons~ <br/><br/>
+		        </span><span id="3" class="hoverToWhite"  onclick="redText(3)">
+		             3. Don't play the mobile phones in the lessons~ <br/><br/>
+	    	    </span><span id="4" class="hoverToWhite"  onclick="redText(4)">
+	    	         4. Respect your teachers and your classmates!!! <br/><br/>
+	    	    </span></span>
+		        <span class="redtext"><sup>*Please Enjoy our 2A Class, Good luck~,  Contact me (cherry)* <br/>*Phone: 2256 7302*</br> *Email: ykcheng@vtc.edu.hk* </sup>
+
+            </div>
+       
+        </div>
+        
+       
+        
+        
+        <!-- ===== IONICONS ===== -->
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        
+        <!-- ===== MAIN JS ===== -->
+        <script src="./js/main.js"></script>
+        <script src="./js/student.js"></script>
+        <script type="text/javascript" src="./jslib/jquery-1.11.1.js"></script>
+    </body>
+</html>
+
+<!-- JQ -->
+ <script>
+    $("#btn_1").css("background-color","MediumSeaGreen");
+
+    $(document).ready(function(){
+        $("#btn_1").click(function(){
+            $("#btn_1").css("background-color","MediumSeaGreen");
+            $("#btn_2").css("background-color","Tomato");
+            $(".UserInput_txt").css("background-color","black");
+        });
+
+        $(".UserInput_txt").focus(function(){
+            $(this).css("background-color","Tomato");
+        });
+
+        $(".UserInput_txt").keydown(function(){
+            $(this).css("background-color","MediumSeaGreen");
+        });
+
+        $(".UserInput_txt").blur(function(){
+            if(this.value != ""){
+                $(this).css("background-color","#a6d7ff");
+            }else{
+                $(this).css("background-color","black");
+            } 
+        });
+    });
+
+ </script>
