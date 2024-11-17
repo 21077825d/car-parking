@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking System</title>
+    <title>User Profile</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -39,17 +39,6 @@
         .sidebar a:hover {
             background-color: #ddd;
         }
-        .booking-card {
-            border: 1px solid #ddd;
-            padding: 30px; /* Increased padding */
-            margin-bottom: 30px; /* Increased margin */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-size: 20px; /* Increased font size */
-        }
-        .booking-card h2 {
-            margin-top: 0;
-            font-size: 12px; /* Increased font size */
-        }
         .sidebar div {
             font-size: 28px; /* Increased font size for BOOKING SYSTEM */
             font-weight: bold; /* Make it bold */
@@ -68,42 +57,61 @@
             align-items: center;
         }
         .profile-pic {
-            width: 400px;
-            height: 400px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
         .main-content {
-            margin-left: 0px; /* Adjusted margin to align with sidebar width */
-            margin-left: 200px;
+            margin-left: 200px; /* Offset the main content to the right of the sidebar */
+        }
+        .profile-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .profile-card h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .profile-card p {
+            font-size: 18px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="header" id="header">
-        <span>Welcome, John Wick - Admin</span>
+        <span>User Profile</span>
         <img src="../assets/index/wtm.png" alt="Profile Picture" class="profile-pic" id="profilePic">
-        <input type="file" id="profilePicInput" style="display: none;">
     </div>
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="sidebar-sticky">
                     <div>BOOKING SYSTEM</div>
-                    <a href="#"><img src="../assets/index/UserProfile.png" alt="User Profile">User Profile</a>
-                    <a href="#"><img src="../assets/index/Bookings.png" alt="Bookings">Bookings</a>
-                    <a href="#"><img src="../assets/index/Message.png" alt="Message">Message</a>
-                    <a href="#"><img src="../assets/index/Help.png" alt="Help">Help</a>
-                    <a href="#"><img src="../assets/index/Setting.png" alt="Settings">Settings</a>
+                    <a href="userProfile.html"><img src="../assets/index/UserProfile.png" alt="User Profile">User Profile</a>
+                    <a href="bookings.html"><img src="../assets/index/Bookings.png" alt="Bookings">Bookings</a>
+                    <a href="help.html"><img src="../assets/index/Help.png" alt="Help">Help</a>
+                    <a href="settings.html"><img src="../assets/index/Setting.png" alt="Settings">Settings</a>
                 </div>
             </nav>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
-                <h1>Booking List for John Wick</h1>
-                <div class="booking-card">
-                    <h2>Private Car</h2>
-                    <p>Date and time: 01 NOV 06:00 to 01 NOV 10:30</p>
-                    <p>Location: Hong Kong Disneyland Hotel Car Park</p>
-                    <p>Total Payment: $75</p>
+                <div class="profile-card">
+                    <img src="../assets/index/wtm.png" alt="Profile Picture">
+                    <h2>John Wick</h2>
+                    <p>Role: Admin</p>
+                    <p>Email: john.wick@example.com</p>
+                    <p>Phone: +1234567890</p>
                 </div>
             </main>
         </div>
@@ -112,28 +120,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Example user profile data
-        const userProfile = {
-            name: "John Wick",
-            role: "Admin"
-        };
-
-        // Function to set header based on user profile
-        function setHeader(user) {
-            const headerElement = document.getElementById('header');
-            headerElement.innerHTML = `Welcome, ${user.name} - ${user.role}`;
-        }
-
-        // Set the header when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            setHeader(userProfile);
-        });
-
-        // Function to change profile picture
-        document.getElementById('profilePic').addEventListener('click', function() {
-            document.getElementById('profilePicInput').click();
-        });
-
         document.getElementById('profilePicInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
