@@ -1,37 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const registerButton = document.getElementById('registerButton');
+document.getElementById('loginButton').addEventListener('click', async () => {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-  registerButton.addEventListener('click', async () => {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+  if (!username || !password) {
+    alert('Username and password cannot be empty');
+    return;
+  }
 
-    if (!username || !password) {
-      alert('Username and password cannot be empty');
-      return;
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('password', password);
+
+  try {
+    const response = await fetch('/auth/login', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(`Logged as ${result.user.username} (${result.user.role})`);
+      window.location.href = 'User_BookingPage.html';
+    } else {
+      alert(result.message);
     }
-
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-    formData.append('role', role);
-
-    try {
-      const response = await fetch('/auth/register', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert(`Welcome, ${result.user.username}!\nYou can login with your account now!`);
-        window.location.href = 'login.html';
-      } else {
-        alert(result.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-    }
-  });
+  } catch (error) {
+    alert('Unknown error');
+  }
 });

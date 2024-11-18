@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Park Space Selection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .car-park {
+        display: grid;
+        grid-template-columns: repeat(6, 60px);
+        grid-gap: 10px;
+        background-color: #fff;
+        padding: 20px;
+        border: 2px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .car-park svg {
+        width: 60px;
+        height: 100px;
+      }
+      .car-park rect {
+        fill: lightgray;
+        stroke: black;
+        stroke-width: 2;
+      }
+      .car-park text {
+        font-size: 16px;
+        text-anchor: middle;
+        dominant-baseline: middle;
+        fill: black;
+      }
+      .car-park .selected rect {
+        fill: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="car-park">
+      <!-- SVG rectangles for car park spaces -->
+      <script>
+        for (let i = 1; i <= 30; i++) {
+          document.write(`
+                    <svg>
+                        <rect width="60" height="100" />
+                        <text x="30" y="50">${i}</text>
+                    </svg>
+                `);
+        }
+      </script>
+    </div>
+
+    <script>
+      // Add event listeners to each car park space
+      const spaces = document.querySelectorAll('.car-park svg');
+      spaces.forEach((space) => {
+        space.addEventListener('click', () => {
+          // Toggle the selected class
+          space.classList.toggle('selected');
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+[
+  {
+    "_id": "6730c8d6c76810cd4fb67dac",
+    "username": "alice",
+    "password": "newpassword",
+    "role": "user",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67dad",
+    "username": "bob",
+    "password": "bob4321",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67dae",
+    "username": "janice",
+    "password": "ecinaj",
+    "role": "user",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67daf",
+    "username": "root",
+    "password": "root+pass",
+    "role": "admin",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67db0",
+    "username": "21077825d",
+    "password": "21077825d",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67db1",
+    "username": "lab4user",
+    "password": "12345678",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67db2",
+    "username": "7825Y",
+    "password": "21077825d",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730d14f6a1758a0c2e178e9",
+    "username": "21077825db",
+    "enabled": true,
+    "password": "21077825db",
+    "role": "student"
+  },
+  {
+    "_id": "6734bffb6a1758a0c2746c7a",
+    "username": "213123321312",
+    "enabled": null,
+    "password": "12345678",
+    "role": "student"
+  },
+  {
+    "_id": "67372a136a1758a0c2d2906c",
+    "username": "4611d",
+    "enabled": null,
+    "password": "12345678",
+    "role": "student"
+  },
+  {
+    "_id": "673765836a1758a0c2dc804d",
+    "username": "root1",
+    "enabled": null,
+    "password": "12345678",
+    "role": null
+  },
+  {
+    "_id": "6737772a6a1758a0c2df5228",
+    "username": "test1",
+    "email": null,
+    "enabled": null,
+    "password": "12345678",
+    "phonenumber": null
+  },
+  {
+    "_id": "6738b4366a1758a0c2121efd",
+    "username": "test2",
+    "email": null,
+    "enabled": null,
+    "password": "12345678",
+    "phonenumber": null
+  }
+]
