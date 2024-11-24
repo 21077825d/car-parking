@@ -3,14 +3,16 @@ window.onload = function () {
   var entryDate = localStorage.getItem('entryDate');
   var exitDate = localStorage.getItem('exitDate');
   var parkingFee = localStorage.getItem('parkingFee');
+  var selectedBays = localStorage.getItem('selected-parkingBay');
 
   var vehicleTypeText = getVehicleTypeText(vehicleType);
 
   var notesHtml = `
-        Vehicle Classification: ${vehicleTypeText}
-        Entry Date &amp; Time: ${entryDate}
-        Exit Date &amp; Time: ${exitDate}
-        Booking Fee: HKD$${parkingFee}
+        <p>Vehicle Classification: ${vehicleTypeText}</p>
+        <p>Entry Date & Time: ${entryDate}</p>
+        <p>Exit Date & Time: ${exitDate}</p>
+        <p>Booking Fee: HKD$${parkingFee}</p>
+        <p>Selected Parking Bay(s): ${selectedBays}</p>
     `;
 
   document.querySelector('.notes').innerHTML = notesHtml;
@@ -27,11 +29,8 @@ function handleFormSubmit() {
   var octopusCardNo = document.getElementById('octopus-card-no').value;
   var confirmOctopusCardNo = document.getElementById('octopus-card-no-confirm').value;
   var octopusCardLastDigit = document.getElementById('octopus-card-last-digit').value;
-  var confirmLastDigit = document.getElementById('octopus-card-last-digit-confirm').value;
 
-  if (
-    !validateForm(mobileNo, carPlateNo, octopusCardNo, confirmOctopusCardNo, octopusCardLastDigit, confirmLastDigit)
-  ) {
+  if (!validateForm(mobileNo, carPlateNo, octopusCardNo, confirmOctopusCardNo, octopusCardLastDigit)) {
     return;
   }
 
@@ -44,42 +43,27 @@ function handleFormSubmit() {
     carPlateNo: carPlateNo,
     octopusCardNo: octopusCardNo,
     octopusCardLastDigit: octopusCardLastDigit,
-    confirmLastDigit: confirmLastDigit,
   });
 }
 
-function validateForm(
-  mobileNo,
-  carPlateNo,
-  octopusCardNo,
-  confirmOctopusCardNo,
-  octopusCardLastDigit,
-  confirmLastDigit
-) {
-  if (
-    !mobileNo ||
-    !carPlateNo ||
-    !octopusCardNo ||
-    !confirmOctopusCardNo ||
-    !octopusCardLastDigit ||
-    !confirmLastDigit
-  ) {
+function validateForm(mobileNo, carPlateNo, octopusCardNo, confirmOctopusCardNo, octopusCardLastDigit) {
+  if (!mobileNo || !carPlateNo || !octopusCardNo || !confirmOctopusCardNo || !octopusCardLastDigit) {
     alert('Please fill in all fields');
     return false;
   }
 
   if (!/^\d{8}$/.test(mobileNo)) {
-    alert('Invalid mobile number. It should be 8 digits.');
+    alert('Invalid mobile number');
     return false;
   }
 
   if (!/^\d{8}$/.test(octopusCardNo) || !/^\d$/.test(octopusCardLastDigit)) {
-    alert('Invalid Octopus card number. It should be 8 digits and the last digit should be a single digit.');
+    alert('Invalid Octopus card number');
     return false;
   }
 
-  if (octopusCardNo !== confirmOctopusCardNo || octopusCardLastDigit !== confirmLastDigit) {
-    alert('Octopus card number does not match.');
+  if (octopusCardNo !== confirmOctopusCardNo) {
+    alert('Octopus card numbers do not match');
     return false;
   }
 

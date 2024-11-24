@@ -3,70 +3,193 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Car Park Space Selection</title>
+    <title>Parking Bay Map</title>
+    <link rel="stylesheet" href="css/booking-page2.css" />
+    <script src="js/booking-page2.js" defer></script>
     <style>
       body {
-        font-family: Arial, sans-serif;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
         height: 100vh;
         margin: 0;
-        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
       }
-      .car-park {
-        display: grid;
-        grid-template-columns: repeat(6, 60px);
-        grid-gap: 10px;
-        background-color: #fff;
-        padding: 20px;
-        border: 2px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      .car-park svg {
-        width: 60px;
-        height: 100px;
-      }
-      .car-park rect {
+      .parking-bay {
         fill: lightgray;
         stroke: black;
-        stroke-width: 2;
+        stroke-width: 1;
+        cursor: pointer;
+        transition: fill 0.3s;
       }
-      .car-park text {
-        font-size: 16px;
+      .parking-bay:hover {
+        fill: yellow;
+      }
+      .booked {
+        fill: red;
+      }
+      .floor {
+        margin-bottom: 20px;
+      }
+      .next-button {
+        margin: 10px 0;
+        padding: 10px 80px;
+        font-size: 1.25em;
+        font-weight: bold;
+        height: fit-content;
+        border-radius: 5px;
+        color: #003dfc;
+        background-color: white;
+        border: 1px solid #003dfc;
+      }
+      .next-button:hover {
+        background-color: #003dfc;
+        color: white;
+      }
+      #cancelButton {
+        margin: 10px 0;
+        padding: 10px 90px;
+        font-size: 1.25em;
+        font-weight: bold;
+        height: fit-content;
+        border-radius: 5px;
+        background-color: white;
+        color: #b3b3b3;
+        border: none; /* Remove the outline */
+        text-decoration: underline; /* Underline the text */
+        white-space: nowrap; /* Ensure text stays on one line */
+      }
+      #cancelButton:hover {
+        background-color: rgb(26, 26, 26);
+        color: white;
+      }
+      .bay-number {
+        font-size: 14px;
         text-anchor: middle;
-        dominant-baseline: middle;
-        fill: black;
       }
-      .car-park .selected rect {
-        fill: green;
+      #parking-map {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #selected-bays {
+        margin-bottom: 25px;
+        font-size: 1.2em;
       }
     </style>
   </head>
   <body>
-    <div class="car-park">
-      <!-- SVG rectangles for car park spaces -->
-      <script>
-        for (let i = 1; i <= 30; i++) {
-          document.write(`
-                    <svg>
-                        <rect width="60" height="100" />
-                        <text x="30" y="50">${i}</text>
-                    </svg>
-                `);
-        }
-      </script>
+    <h1>Parking Bay Map</h1>
+    <div id="parking-map">
+      <!-- Floor 1 -->
+      <div class="floor" id="floor-1">
+        <h2>Floor 1</h2>
+        <svg width="1200" height="300" id="svg-floor-1"></svg>
+      </div>
+      <!-- Floor 2 -->
+      <div class="floor" id="floor-2">
+        <h2>Floor 2</h2>
+        <svg width="1200" height="300" id="svg-floor-2"></svg>
+      </div>
     </div>
+    <div id="selected-bays">Selected Parking bay(s):</div>
+    <button class="next-button" onclick="nextPage()">Next</button>
+    <button type="button" id="cancelButton" name="cancelButton" onclick="window.location.href='booking-page1.html'">
+      Cancel
+    </button>
 
     <script>
-      // Add event listeners to each car park space
-      const spaces = document.querySelectorAll('.car-park svg');
-      spaces.forEach((space) => {
-        space.addEventListener('click', () => {
-          // Toggle the selected class
-          space.classList.toggle('selected');
-        });
-      });
+      let selectedBays = [];
+
+      function createParkingBays(floor, side, svgElement) {
+        const verticalGap = 180; // Increased vertical gap between the two rows
+        const bayWidth = 60; // Enlarged width of parking bay
+        const bayHeight = 90; // Enlarged height of parking bay
+        for (let i = 1; i <= 15; i++) {
+          const x = i * 70;
+          const y = side === 'L' ? 10 : 10 + verticalGap;
+
+          // Create parking bay rectangle
+          const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          rect.setAttribute('class', 'parking-bay');
+          rect.setAttribute('id', `${floor}${side}${i}`);
+          rect.setAttribute('x', x);
+          rect.setAttribute('y', y);
+          rect.setAttribute('width', bayWidth);
+          rect.setAttribute('height', bayHeight);
+          rect.setAttribute('onclick', `toggleBooking('${floor}${side}${i}')`);
+          svgElement.appendChild(rect);
+
+          // Create text for parking bay number
+          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          text.setAttribute('class', 'bay-number');
+          text.setAttribute('x', x + bayWidth / 2);
+          text.setAttribute('y', y + bayHeight / 2);
+          text.textContent = `${floor}${side}${i}`;
+          svgElement.appendChild(text);
+        }
+      }
+
+      function initializeParkingMap() {
+        const svgFloor1 = document.getElementById('svg-floor-1');
+        createParkingBays('1', 'L', svgFloor1);
+        createParkingBays('1', 'R', svgFloor1);
+
+        const svgFloor2 = document.getElementById('svg-floor-2');
+        createParkingBays('2', 'L', svgFloor2);
+        createParkingBays('2', 'R', svgFloor2);
+      }
+
+      function toggleBooking(id) {
+        const bay = document.getElementById(id);
+        const floor = id.charAt(0);
+        const side = id.charAt(1) === 'L' ? 'Left' : 'Right';
+        const number = id.slice(2);
+        if (bay.classList.contains('booked')) {
+          const confirmCancel = confirm(
+            `Do you want to cancel the booking for parking bay ${number} on ${side} side of Floor ${floor}?`
+          );
+          if (confirmCancel) {
+            bay.classList.remove('booked');
+            selectedBays = selectedBays.filter((bayId) => bayId !== id);
+          }
+        } else {
+          if (selectedBays.length >= 2) {
+            alert('You can only select up to 2 parking bays.');
+            return;
+          }
+          const confirmBooking = confirm(
+            `Do you want to book parking bay ${number} on ${side} side of Floor ${floor}?`
+          );
+          if (confirmBooking) {
+            bay.classList.add('booked');
+            selectedBays.push(id);
+          }
+        }
+        updateSelectedBays();
+      }
+
+      function updateSelectedBays() {
+        const selectedBaysText = selectedBays.join(', ');
+        document.getElementById('selected-bays').textContent = `Selected Parking bay(s): ${selectedBaysText}`;
+      }
+
+      function nextPage() {
+        if (selectedBays.length === 0) {
+          alert('Please select at least one parking bay before proceeding.');
+          return;
+        }
+        alert('Proceeding to the next page with selected bays: ' + selectedBays.join(', '));
+
+        localStorage.setItem('selected-parkingBay', selectedBays);
+
+        window.location.href = 'booking-page3.html';
+        // Add your logic to navigate to the next page
+      }
+
+      // Initialize the parking map when the page loads
+      window.onload = initializeParkingMap;
     </script>
   </body>
 </html>

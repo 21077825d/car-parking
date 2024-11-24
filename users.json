@@ -1,37 +1,9 @@
 [
   {
-    "_id": "6730c8d6c76810cd4fb67dac",
-    "username": "alice",
-    "password": "newpassword",
-    "role": "user",
-    "enabled": true
-  },
-  {
-    "_id": "6730c8d6c76810cd4fb67dad",
-    "username": "bob",
-    "password": "bob4321",
-    "role": "student",
-    "enabled": true
-  },
-  {
     "_id": "6730c8d6c76810cd4fb67dae",
     "username": "janice",
     "password": "ecinaj",
     "role": "user",
-    "enabled": true
-  },
-  {
-    "_id": "6730c8d6c76810cd4fb67daf",
-    "username": "root",
-    "password": "root+pass",
-    "role": "admin",
-    "enabled": true
-  },
-  {
-    "_id": "6730c8d6c76810cd4fb67db0",
-    "username": "21077825d",
-    "password": "21077825d",
-    "role": "student",
     "enabled": true
   },
   {
@@ -46,6 +18,34 @@
     "username": "7825Y",
     "password": "21077825d",
     "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67db0",
+    "username": "21077825d",
+    "password": "21077825d",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67dac",
+    "username": "alice",
+    "password": "newpassword",
+    "role": "user",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67dad",
+    "username": "bob",
+    "password": "bob4321",
+    "role": "student",
+    "enabled": true
+  },
+  {
+    "_id": "6730c8d6c76810cd4fb67daf",
+    "username": "root",
+    "password": "root+pass",
+    "role": "admin",
     "enabled": true
   },
   {
@@ -90,6 +90,14 @@
     "email": null,
     "enabled": null,
     "password": "12345678",
+    "phonenumber": null
+  },
+  {
+    "_id": "67435aa19519ef2488f458df",
+    "username": "Tam",
+    "email": null,
+    "enabled": null,
+    "password": "Y142857a",
     "phonenumber": null
   }
 ]
