@@ -1,0 +1,32 @@
+[
+  {
+    "email": "123456@gamil.com",
+    "bookings": [
+      {
+        "parkingBay": "A1",
+        "orderdate": "2024-12-01",
+        "CarPlateNo": "123",
+        "entryDate": "2024-11-29T13:52",
+        "exitDate": "2024-11-30T13:52",
+        "parkingFee": "$100",
+        "selected-parkingBay": "12345678",
+        "vehicleType": "123"
+      }
+    ]
+  },
+  {
+    "email": "1234562323@gamil.com",
+    "bookings": [
+      {
+        "parkingBay": "A1",
+        "orderdate": "2024-12-01",
+        "CarPlateNo": "123",
+        "entryDate": "2024-11-29T13:52",
+        "exitDate": "2024-11-29T13:52",
+        "parkingFee": "$100",
+        "selected-parkingBay": "123456798",
+        "vehicleType": "123"
+      }
+    ]
+  }
+]
