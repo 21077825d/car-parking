@@ -34,9 +34,15 @@ document.getElementById('bookingButton').addEventListener('click', function () {
 
   var entryDateTime = new Date(entryDate);
   var exitDateTime = new Date(exitDate);
+  var currentDateTime = new Date();
 
   if (isNaN(entryDateTime) || isNaN(exitDateTime)) {
     alert('Invalid date format');
+    return;
+  }
+
+  if (entryDateTime < currentDateTime.setHours(currentDateTime.getHours() + 2)) {
+    alert('Booking can only be made before you enter the car park and it can be made 2 hours prior to entry.');
     return;
   }
 
@@ -67,10 +73,17 @@ document.getElementById('bookingButton').addEventListener('click', function () {
 
   var parkingFee = calculateParkingFee(entryDateTime, exitDateTime, vehicleType);
 
+  // Check if the booking duration is within the discount period
+  var discountStartDate = new Date('2024-11-21');
+  var discountEndDate = new Date('2024-12-07');
+  if (entryDateTime >= discountStartDate && exitDateTime <= discountEndDate) {
+    parkingFee *= 0.9; // Apply 10% discount
+  }
+
   localStorage.setItem('vehicleType', vehicleType);
   localStorage.setItem('entryDate', entryDate);
   localStorage.setItem('exitDate', exitDate);
-  localStorage.setItem('parkingFee', parkingFee);
+  localStorage.setItem('parkingFee', parkingFee.toFixed(2));
 
   window.location.href = 'booking-page2.html';
 });

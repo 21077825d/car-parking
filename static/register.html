@@ -88,21 +88,32 @@
   </head>
   <body>
     <div class="left-column">
-      <img src="../assets/register-page-photo.png" alt="Description of image" />
+      <img src="../img/register-page-photo.png" alt="Description of image" />
     </div>
     <div class="right-column">
       <main class="register-form">
         <h2 class="text-center">Register</h2>
         <form id="registerForm">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="userId">User ID</label>
             <input
               type="text"
               class="form-control"
-              placeholder="Enter your name"
-              id="username"
-              name="username"
-              aria-label="Username"
+              placeholder="Enter your user ID"
+              id="userId"
+              name="userId"
+              aria-label="User ID"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="nickname">Nickname</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter your nickname"
+              id="nickname"
+              name="nickname"
+              aria-label="Nickname"
               required />
           </div>
           <div class="form-group">
@@ -117,7 +128,7 @@
               minlength="6" />
           </div>
           <div class="form-group">
-            <label for="repeat-password">Repeat Password</label>
+            <label for="repeatPassword">Repeat Password</label>
             <input
               type="password"
               class="form-control"
@@ -139,20 +150,22 @@
               required />
           </div>
           <div class="form-group">
-            <label for="phone-number">Phone Number</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="eg: 1234 5678"
-              id="phone-number"
-              name="phone-number"
-              aria-label="Phone Number"
-              required />
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender" aria-label="Gender" required>
+              <option value="" disabled selected>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="birthdate">Birthdate</label>
+            <input type="date" class="form-control" id="birthdate" name="birthdate" aria-label="Birthdate" required />
           </div>
           <div class="agreement">By registering, you agree to our <a href="#">terms and conditions</a>.</div>
           <div class="button-container">
-            <button type="button" id="registerButton" name="registerButton">Register</button>
-            <button type="button" id="backButton" name="backButton" onclick="window.location.href='login.html'">
+            <button type="submit" id="registerButton" name="registerButton">Register</button>
+            <button type="button" id="backButton" name="backButton" onclick="window.location.href='index.html'">
               Back
             </button>
           </div>

@@ -3,7 +3,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 160vh;
   margin: 0;
   font-family: Arial, sans-serif;
 }
@@ -15,10 +15,14 @@ body {
   transition: fill 0.3s;
 }
 .parking-bay:hover {
-  fill: yellow;
+  fill: #ffee8c;
+}
+.parking-bay.occupied {
+  fill: #cbe4f9;
+  cursor: not-allowed;
 }
 .booked {
-  fill: red;
+  fill: #f9d8d6;
 }
 .floor {
   margin-bottom: 20px;

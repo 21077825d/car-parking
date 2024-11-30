@@ -2,70 +2,122 @@ import express from 'express';
 import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import login from './login.js'; // Adjusted path since index.js is in ./src
-import MongoStore from 'connect-mongo'; // Import connect-mongo as MongoStore
-import client from './dbclient.js'; // Import the MongoDB client
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import bcrypt from 'bcrypt';
+import { initializeUsers, readUsersFromFile, writeUsersToFile } from './utils/fileHelpers.js';
+import loginRoutes from './routes/login.js';
+import registerRoutes from './routes/register.js';
+import profileRoutes from './routes/profile.js';
+import bookingsRoutes from './routes/bookings.js';
+import adminRoutes from './routes/admin.js';
+import eventRoutes from './routes/events.js'; // Import event routes
+import parkingBaysRoutes from './routes/parkingBays.js'; // Import parking bays routes
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const port = 3000;
 
-// Apply express-session middleware to the whole application
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(
   session({
-    secret: 'eie4432_project', // Update the session secret
+    secret: '<Student ID>_eie4432_lab4',
     resave: false,
     saveUninitialized: false,
     cookie: { httpOnly: true },
-    store: MongoStore.create({
-      // Use MongoDB as the session store
-      client,
-      dbName: 'lab5db',
-      collectionName: 'session',
-    }),
   })
 );
 
-// Middleware to parse JSON bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Add this line to parse URL-encoded bodies
+initializeUsers();
 
-// Apply the login route module to the path “/auth” for all HTTP methods
-app.use('/auth', login);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../assets/profile'));
+  },
+  filename: (req, file, cb) => {
+    const userId = req.session.userId;
+    cb(null, `${userId}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
 
-// Redirect root URL to /index.html
+app.use('/login', loginRoutes);
+app.use('/register', registerRoutes);
+app.use('/profile', profileRoutes);
+app.use('/bookings', bookingsRoutes);
+app.use('/admin', adminRoutes);
+app.use('/events', eventRoutes); // Use event routes
+app.use('/parkingbays', parkingBaysRoutes); // Use parking bays routes
+
+app.post('/update-profile', upload.single('profilePic'), async (req, res) => {
+  const { nickname, password, email, gender, birthdate } = req.body;
+
+  if (!req.session.userId) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  const users = readUsersFromFile();
+  const userIndex = users.findIndex((user) => user.id === req.session.userId);
+
+  if (userIndex === -1) {
+    return res.status(404).send('User not found');
+  }
+
+  const user = users[userIndex];
+  user.nickname = nickname;
+  user.email = email;
+  user.gender = gender;
+  user.birthdate = birthdate;
+
+  if (req.file) {
+    user.profilePic = `/assets/profile/${req.file.filename}`;
+  }
+
+  if (password) {
+    user.password = await bcrypt.hash(password, 10);
+  }
+
+  users[userIndex] = user;
+  writeUsersToFile(users);
+
+  res.send('Profile updated successfully');
+});
+
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Logout failed');
+    }
+    res.send('Logout successful');
+  });
+});
+
 app.get('/', (req, res) => {
-  res.redirect('/index.html');
+  if (!req.session.userId) {
+    return res.redirect('/login.html');
+  }
+
+  const users = readUsersFromFile();
+  const user = users.find((user) => user.id === req.session.userId);
+
+  if (user && user.account === 'admin') {
+    return res.redirect('/admin.html');
+  }
+
+  res.redirect('/profile.html');
 });
 
-// Serve index.html directly
-app.get('/index.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../static/index.html'));
-});
+app.use('/', express.static(path.join(__dirname, '../static')));
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
 
-// Serve static files from the 'static' directory
-app.use('/', express.static(path.join(__dirname, '../static'))); // Adjusted path for static files
+app.use('/api/bookings', bookingsRoutes); // Use the bookings route for API
+app.use('/api/parkingbays', parkingBaysRoutes); // Use the parking bays route for API
 
-app.use(express.json());
-
-app.post('/payment', (req, res) => {
-  const paymentData = req.body;
-  console.log('Received payment data:', paymentData);
-
-  // Process the payment data here
-  // For example, save it to a database or send it to a payment gateway
-
-  res.status(200).json({ message: 'Payment processed successfully' });
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
-
-// Start the server
-app.listen(8080, () => {
-  const currentDateTime = new Date().toLocaleString('en-HK', { timeZone: 'Asia/Hong_Kong' });
-  console.log(`Current date and time in HKT: ${currentDateTime}`);
-  console.log('Server started at http://127.0.0.1:8080');
+const PORT = 8020;
+app.listen(PORT, () => {
+  const currentDate = new Date().toLocaleString('en-HK', { timeZone: 'Asia/Hong_Kong' });
+  console.log(`Current date and time in HKT: ${currentDate}`);
+  console.log(`Server started at http://127.0.0.1:${PORT}`);
 });

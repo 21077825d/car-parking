@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
+    <title>Login</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <script src="js/login.js" defer></script>
     <style>
@@ -28,7 +28,7 @@
         height: 100%;
         object-fit: cover;
       }
-      .register-form {
+      .login-form {
         width: 315px;
       }
       footer {
@@ -59,9 +59,9 @@
         background-color: #003dfc;
         color: white;
       }
-      #createButton {
+      #backButton {
         margin: 10px 0;
-        padding: 10px 72px;
+        padding: 10px 103px;
         font-size: 1.25em;
         font-weight: bold;
         height: fit-content;
@@ -72,37 +72,29 @@
         text-decoration: underline; /* Underline the text */
         white-space: nowrap; /* Ensure text stays on one line */
       }
-      #createButton:hover {
+      #backButton:hover {
         background-color: rgb(26, 26, 26);
         color: white;
-      }
-      .agreement {
-        font-size: 0.8em;
-        text-align: center;
-        padding-bottom: 10px;
-      }
-      .agreement a {
-        color: #003dfc;
       }
     </style>
   </head>
   <body>
     <div class="left-column">
-      <img src="../assets\register-page-photo.png" alt="Description of image" />
+      <img src="../img/register-page-photo.png" alt="Description of image" />
     </div>
     <div class="right-column">
       <main class="login-form">
         <h2 class="text-center">Login</h2>
         <form id="loginForm">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="userId">User ID</label>
             <input
               type="text"
               class="form-control"
-              placeholder="Enter your name"
-              id="username"
-              name="username"
-              aria-label="Username"
+              placeholder="Enter your user ID"
+              id="userId"
+              name="userId"
+              aria-label="User ID"
               required />
           </div>
           <div class="form-group">
@@ -116,11 +108,10 @@
               required
               minlength="6" />
           </div>
-          <div class="agreement">By registering, you agree to our <a href="#">terms and conditions</a>.</div>
           <div class="button-container">
-            <button type="button" id="loginButton" name="loginButton">Login</button>
-            <button type="button" id="createButton" name="createButton" onclick="window.location.href='register.html'">
-              Create Account
+            <button type="submit" id="loginButton" name="loginButton">Login</button>
+            <button type="button" id="backButton" name="backButton" onclick="window.location.href='index.html'">
+              Back
             </button>
           </div>
         </form>
