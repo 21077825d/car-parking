@@ -1,54 +1,95 @@
-import fs from 'fs';
-import path from 'path';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { fileURLToPath } from 'url';
+import { connectToDatabase } from './db.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const usersFilePath = path.join(__dirname, '../user.json');
-const bookingsFilePath = path.join(__dirname, '../bookings.json');
-const eventsFilePath = path.join(__dirname, '../events.json');
-
-export const readUsersFromFile = () => {
-  if (!fs.existsSync(usersFilePath)) {
-    return [];
+// Read users from MongoDB
+export const readUsersFromFile = async () => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
   }
-  const data = fs.readFileSync(usersFilePath);
-  return JSON.parse(data);
+  const users = await db.collection('users').find().toArray();
+  return users;
 };
 
-export const readBookingsFromFile = () => {
-  if (!fs.existsSync(bookingsFilePath)) {
-    return [];
+// Read bookings from MongoDB
+export const readBookingsFromFile = async () => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
   }
-  const data = fs.readFileSync(bookingsFilePath);
-  return JSON.parse(data);
+  const bookings = await db.collection('bookings').find().toArray();
+  return bookings;
 };
 
-export const readEventsFromFile = () => {
-  if (!fs.existsSync(eventsFilePath)) {
-    return [];
+// Read parking bays from MongoDB
+export const readParkingBaysFromFile = async () => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
   }
-  const data = fs.readFileSync(eventsFilePath);
-  return JSON.parse(data);
+  const parkingBays = await db.collection('parkingbay').find().toArray();
+  return parkingBays;
 };
 
-export const writeUsersToFile = (users) => {
-  fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+// Write users to MongoDB
+export const writeUsersToFile = async (users) => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  await db.collection('users').insertMany(users);
 };
 
-export const writeBookingsToFile = (bookings) => {
-  fs.writeFileSync(bookingsFilePath, JSON.stringify(bookings, null, 2));
+// Write bookings to MongoDB
+export const writeBookingsToFile = async (bookings) => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  await db.collection('bookings').insertMany(bookings);
 };
 
-export const writeEventsToFile = (events) => {
-  fs.writeFileSync(eventsFilePath, JSON.stringify(events, null, 2));
+// Write parking bays to MongoDB
+export const writeParkingBaysToFile = async (parkingBays) => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  await db.collection('parkingbay').insertMany(parkingBays);
 };
 
-export const initializeUsers = () => {
-  const users = readUsersFromFile();
+// Update parking bay status in MongoDB
+export const updateParkingBayStatus = async (bayId, enabled, email) => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  await db.collection('parkingbay').updateOne({ bayId }, { $set: { enabled, email } }, { upsert: true });
+};
+
+// Read events from MongoDB
+export const readEventsFromFile = async () => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  const events = await db.collection('events').find().toArray();
+  return events;
+};
+
+// Write events to MongoDB
+export const writeEventsToFile = async (events) => {
+  const db = await connectToDatabase();
+  if (!db) {
+    throw new Error('Failed to connect to the database');
+  }
+  await db.collection('events').insertMany(events);
+};
+
+// Initialize users in MongoDB
+export const initializeUsers = async () => {
+  const users = await readUsersFromFile();
   const adminUser = users.find((user) => user.userId === 'admin');
   if (!adminUser) {
     const newAdminUser = {
@@ -63,6 +104,6 @@ export const initializeUsers = () => {
       profilePic: '/assets/profile/default-profile.png',
     };
     users.push(newAdminUser);
-    writeUsersToFile(users);
+    await writeUsersToFile(users);
   }
 };

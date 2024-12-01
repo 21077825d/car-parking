@@ -195,7 +195,7 @@
                 class="img-fluid mb-3 mr-2" />
               <img src="../assets/ic_motorcycle_white.png" alt="Motorcycle" class="img-fluid mb-3" />
             </div>
-            <button class="btn btn-primary mb-3">Book</button>
+            <button class="btn btn-primary mb-3" id="bookPrivateCar">Book</button>
           </div>
         </div>
         <div class="col-md-6">
@@ -209,7 +209,7 @@
                 alt="Van-type Light Goods Vehicle"
                 class="img-fluid mb-3" />
             </div>
-            <button class="btn btn-primary mb-3">Book</button>
+            <button class="btn btn-primary mb-3" id="bookVan">Book</button>
           </div>
         </div>
       </div>
@@ -310,6 +310,17 @@
             card.style.display = 'none';
           }
         });
+      });
+
+      // Handle book button clicks
+      document.getElementById('bookPrivateCar').addEventListener('click', function () {
+        alert('Please login before booking');
+        window.location.href = 'login.html';
+      });
+
+      document.getElementById('bookVan').addEventListener('click', function () {
+        alert('Please login before booking');
+        window.location.href = 'login.html';
       });
     </script>
   </body>

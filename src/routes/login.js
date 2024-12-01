@@ -1,13 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import { readUsersFromFile } from '../utils/fileHelpers.js';
+import { connectToDatabase } from '../utils/db.js';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { userId, password } = req.body;
-  const users = readUsersFromFile();
-  const user = users.find((user) => user.userId === userId);
+  const db = await connectToDatabase();
+  const user = await db.collection('users').findOne({ userId });
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).send('Invalid user ID or password');
