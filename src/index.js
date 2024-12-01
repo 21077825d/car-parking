@@ -5,13 +5,15 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import bcrypt from 'bcrypt';
-import { initializeUsers, readUsersFromFile, writeUsersToFile } from './utils/fileHelpers.js';
+import { initializeUsers } from './utils/fileHelpers.js';
 import loginRoutes from './routes/login.js';
 import registerRoutes from './routes/register.js';
 import profileRoutes from './routes/profile.js';
 import bookingsRoutes from './routes/bookings.js';
 import adminRoutes from './routes/admin.js';
 import eventRoutes from './routes/events.js'; // Import event routes
+import parkingBaysRoutes from './routes/parkingBays.js'; // Import parking bays routes
+import { connectToDatabase } from './utils/db.js'; // Import MongoDB connection
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -48,6 +50,7 @@ app.use('/profile', profileRoutes);
 app.use('/bookings', bookingsRoutes);
 app.use('/admin', adminRoutes);
 app.use('/events', eventRoutes); // Use event routes
+app.use('/parkingbays', parkingBaysRoutes); // Use parking bays routes
 
 app.post('/update-profile', upload.single('profilePic'), async (req, res) => {
   const { nickname, password, email, gender, birthdate } = req.body;
@@ -56,14 +59,13 @@ app.post('/update-profile', upload.single('profilePic'), async (req, res) => {
     return res.status(401).send('Unauthorized');
   }
 
-  const users = readUsersFromFile();
-  const userIndex = users.findIndex((user) => user.id === req.session.userId);
+  const db = await connectToDatabase();
+  const user = await db.collection('users').findOne({ id: req.session.userId });
 
-  if (userIndex === -1) {
+  if (!user) {
     return res.status(404).send('User not found');
   }
 
-  const user = users[userIndex];
   user.nickname = nickname;
   user.email = email;
   user.gender = gender;
@@ -77,8 +79,7 @@ app.post('/update-profile', upload.single('profilePic'), async (req, res) => {
     user.password = await bcrypt.hash(password, 10);
   }
 
-  users[userIndex] = user;
-  writeUsersToFile(users);
+  await db.collection('users').updateOne({ id: req.session.userId }, { $set: user });
 
   res.send('Profile updated successfully');
 });
@@ -92,13 +93,13 @@ app.post('/logout', (req, res) => {
   });
 });
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   if (!req.session.userId) {
-    return res.redirect('/login.html');
+    return res.redirect('/index.html');
   }
 
-  const users = readUsersFromFile();
-  const user = users.find((user) => user.id === req.session.userId);
+  const db = await connectToDatabase();
+  const user = await db.collection('users').findOne({ id: req.session.userId });
 
   if (user && user.account === 'admin') {
     return res.redirect('/admin.html');
@@ -109,6 +110,9 @@ app.get('/', (req, res) => {
 
 app.use('/', express.static(path.join(__dirname, '../static')));
 app.use('/assets', express.static(path.join(__dirname, '../assets')));
+
+app.use('/api/bookings', bookingsRoutes); // Use the bookings route for API
+app.use('/api/parkingbays', parkingBaysRoutes); // Use the parking bays route for API
 
 const PORT = 8020;
 app.listen(PORT, () => {

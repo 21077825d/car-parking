@@ -91,6 +91,7 @@
       }
       .booking-info {
         margin-left: 20px;
+        display: none; /* Initially hide the booking info */
       }
     </style>
   </head>
@@ -116,6 +117,7 @@
             >
             <a href="admin.html" class="sidebar-link"> Admin</a>
             <a href="eventmanagement.html" class="sidebar-link">Events</a>
+            <a href="admin-map.html" class="sidebar-link"> Map-controll</a>
             <button id="logoutButton"><img src="../assets/index/Logout.png" alt="Logout" />Logout</button>
           </div>
         </nav>
@@ -129,98 +131,6 @@
         </main>
       </div>
     </div>
-    <script>
-      // Fetch user profile data
-      fetch('/profile')
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.userId !== 'admin') {
-            window.location.href = 'profile.html'; // Redirect non-admin users
-          }
-          document.getElementById('profilePic').src = data.profilePic;
-        })
-        .catch((error) => {
-          console.error('Error fetching profile data:', error);
-        });
-
-      // Fetch all user data
-      fetch('/admin/users')
-        .then((response) => response.json())
-        .then((data) => {
-          const userList = document.getElementById('userList');
-          data.users.forEach((user) => {
-            const userInfo = document.createElement('div');
-            userInfo.classList.add('user-info');
-            userInfo.innerHTML = `
-              <p><strong>User ID:</strong> ${user.userId}</p>
-              <p><strong>Nickname:</strong> ${user.nickname}</p>
-              <p><strong>Email:</strong> ${user.email}</p>
-              <p><strong>Gender:</strong> ${user.gender}</p>
-              <p><strong>Birthdate:</strong> ${user.birthdate}</p>
-              <p><strong>Profile Picture:</strong> <img src="${user.profilePic}" alt="Profile Picture" class="profile-pic" /></p>
-              <div class="booking-info">
-                <h4>Bookings:</h4>
-                ${user.bookings
-                  .map(
-                    (booking) => `
-                  <p><strong>Parking Bay:</strong> ${booking.parkingBay}</p>
-                  <p><strong>Order Date:</strong> ${booking.orderdate}</p>
-                  <p><strong>Time:</strong> ${booking.time}</p>
-                  <p><strong>Car Plate No:</strong> ${booking.CarPlateNo}</p>
-                  <p><strong>Entry Date:</strong> ${booking.entryDate}</p>
-                  <p><strong>Exit Date:</strong> ${booking.exitDate}</p>
-                  <p><strong>Parking Fee:</strong> ${booking.parkingFee}</p>
-                  <p><strong>Selected Parking Bay:</strong> ${booking['selected-parkingBay']}</p>
-                  <p><strong>Vehicle Type:</strong> ${booking.vehicleType}</p>
-                  <hr>
-                `
-                  )
-                  .join('')}
-              </div>
-              <hr>
-            `;
-            userList.appendChild(userInfo);
-          });
-        })
-        .catch((error) => {
-          console.error('Error fetching user data:', error);
-        });
-
-      // Handle logout
-      document.getElementById('logoutButton').addEventListener('click', () => {
-        fetch('/logout', {
-          method: 'POST',
-        })
-          .then((response) => {
-            if (response.ok) {
-              window.location.href = 'login.html';
-            } else {
-              alert('Logout failed');
-            }
-          })
-          .catch((error) => {
-            console.error('Error during logout:', error);
-          });
-      });
-
-      // Check if user is logged in before navigating to other pages
-      document.querySelectorAll('.sidebar-link').forEach((link) => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          fetch('/profile')
-            .then((response) => {
-              if (response.ok) {
-                window.location.href = link.getAttribute('href');
-              } else if (response.status === 401) {
-                window.location.href = 'login.html';
-              }
-            })
-            .catch((error) => {
-              console.error('Error checking login status:', error);
-              window.location.href = 'login.html';
-            });
-        });
-      });
-    </script>
+    <script src="js/admin.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { readEventsFromFile, writeEventsToFile } from '../utils/fileHelpers.js';
+import { connectToDatabase } from '../utils/db.js';
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -18,14 +18,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.get('/', (req, res) => {
-  const events = readEventsFromFile();
+router.get('/', async (req, res) => {
+  const db = await connectToDatabase();
+  const events = await db.collection('events').find().toArray();
   res.json({ events });
 });
 
-router.post('/create', upload.single('coverImage'), (req, res) => {
+router.post('/create', upload.single('coverImage'), async (req, res) => {
   const { title, startDate, endDate, venue, description, discount } = req.body;
-  const events = readEventsFromFile();
+  const db = await connectToDatabase();
   const newEvent = {
     id: Date.now().toString(),
     title,
@@ -36,46 +37,43 @@ router.post('/create', upload.single('coverImage'), (req, res) => {
     discount,
     coverImage: `/assets/events/${req.file.filename}`,
   };
-  events.push(newEvent);
-  writeEventsToFile(events);
+  await db.collection('events').insertOne(newEvent);
   res.json({ message: 'Event created successfully' });
 });
 
-router.put('/edit/:id', upload.single('coverImage'), (req, res) => {
+router.put('/edit/:id', upload.single('coverImage'), async (req, res) => {
   const { id } = req.params;
   const { title, date, time, venue, description } = req.body;
-  const events = readEventsFromFile();
-  const eventIndex = events.findIndex((event) => event.id === id);
+  const db = await connectToDatabase();
+  const event = await db.collection('events').findOne({ id });
 
-  if (eventIndex === -1) {
+  if (!event) {
     return res.status(404).json({ message: 'Event not found' });
   }
 
   const updatedEvent = {
-    ...events[eventIndex],
+    ...event,
     title,
     date,
     time,
     venue,
     description,
-    coverImage: req.file ? `/assets/events/${req.file.filename}` : events[eventIndex].coverImage,
+    coverImage: req.file ? `/assets/events/${req.file.filename}` : event.coverImage,
   };
 
-  events[eventIndex] = updatedEvent;
-  writeEventsToFile(events);
+  await db.collection('events').updateOne({ id }, { $set: updatedEvent });
   res.json({ message: 'Event updated successfully' });
 });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   const { id } = req.params;
-  const events = readEventsFromFile();
-  const updatedEvents = events.filter((event) => event.id !== id);
+  const db = await connectToDatabase();
+  const result = await db.collection('events').deleteOne({ id });
 
-  if (events.length === updatedEvents.length) {
+  if (result.deletedCount === 0) {
     return res.status(404).json({ message: 'Event not found' });
   }
 
-  writeEventsToFile(updatedEvents);
   res.json({ message: 'Event deleted successfully' });
 });
 
